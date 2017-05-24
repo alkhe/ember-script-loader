@@ -1,5 +1,7 @@
-{{#script-loader script='http://spin.js.org/spin.min.js'}}
-  {{spinjs-spinner width=1 lines=50 scale=1 speed=1}}
+{{#script-loader script=(list)}}
+  {{#script-loader script='http://spin.js.org/spin.min.js'}}
+    {{spinjs-spinner width=1 lines=50 scale=1 speed=1}}
+  {{/script-loader}}
 {{/script-loader}}
 {{#script-loader script='http://spin.js.org/spin.min.js'}}
   {{spinjs-spinner width=1 lines=40 scale=2 speed=2}}

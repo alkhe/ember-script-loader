@@ -1,26 +1,67 @@
 # ember-script-loader
 
-This README outlines the details of collaborating on this Ember addon.
+Dynamic script loader for Ember applications.
 
-## Installation
+## Install
 
-* `git clone <repository-url>` this repository
-* `cd ember-script-loader`
-* `npm install`
+```sh
+$ ember install ember-script-loader
+```
 
-## Running
+## Usage
 
-* `ember serve`
-* Visit your app at [http://localhost:4200](http://localhost:4200).
+**spinjs-spinner.hbs**
+```hbs
+<div class='spinner'></div>
+{{yield}}
+```
 
-## Running Tests
+**spinjs-spinner.js**
+```hbs
+import Ember from 'ember'
 
-* `npm test` (Runs `ember try:each` to test your addon against multiple Ember versions)
-* `ember test`
-* `ember test --server`
+export default Ember.Component.extend({
+	didInsertElement() {
+		const target = this.$('.spinner')[0]
+		new window.Spinner().spin(target)
+	}
+})
+```
 
-## Building
+**application.hbs**
+```hbs
+{{#script-loader script='http://spin.js.org/spin.min.js'}}
+  {{spinjs-spinner}}
+{{/script-loader}}
+```
 
-* `ember build`
+## API
 
-For more information on using ember-cli, visit [https://ember-cli.com/](https://ember-cli.com/).
+### script : string | [string]
+
+Asynchronously load any number of scripts and render block content when all scripts have been sourced. Scripts that have previously been requested will return fast and no network request will be performed for that particular script.
+
+**react-app.hbs**
+```hbs
+<div class='root'></div>
+{{yield}}
+```
+
+**react-app.js**
+```js
+import Ember from 'ember'
+
+export default Ember.Component.extend({
+	didInsertElement() {
+		const { React, ReactDOM } = window
+		ReactDOM.render(<div>Hello!</div>, this.$('.root')[0])
+	}
+})
+```
+
+**application.hbs**
+```hbs
+{{#script-loader script=(list 'https://unpkg.com/react@15/dist/react.min.js' 'https://unpkg.com/react-dom@15/dist/react-dom.min.js')}}
+  {{react-app}}
+{{/script-loader}}
+```

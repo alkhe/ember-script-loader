@@ -37,29 +37,6 @@ function scriptLoader(script) {
 
 let loaders = {}
 
-/*
-export default Ember.Component.extend({
-	layout,
-	init() {
-		const script = this.get('script')
-
-		if (!loaders.hasOwnProperty(script)) {
-			loaders[script] = deferredDependency(scriptLoader(script))
-		}
-
-		const loader = loaders[script]
-
-		this.set('loaded', false)
-
-		loader(() => {
-			this.set('loaded', true)
-		})
-
-		this._super(...arguments)
-	}
-})
-*/
-
 function ensureArray(x) {
 	return x.constructor === Array ? x : [x]
 }
@@ -77,19 +54,23 @@ export default Ember.Component.extend({
 		const len = scripts.length
 		let count = 0
 
-		for (let i = 0; i < len; i++) {
-			const script = scripts[i]
+		if (len === 0) {
+			done()
+		} else {
+			for (let i = 0; i < len; i++) {
+				const script = scripts[i]
 
-			if (!loaders.hasOwnProperty(script)) {
-				loaders[script] = deferredDependency(scriptLoader(script))
+				if (!loaders.hasOwnProperty(script)) {
+					loaders[script] = deferredDependency(scriptLoader(script))
+				}
+
+				const loader = loaders[script]
+
+				loader(() => {
+					count++
+					if (count === len) done()
+				})
 			}
-
-			const loader = loaders[script]
-
-			loader(() => {
-				count++
-				if (count === len) done()
-			})
 		}
 
 		this._super(...arguments)

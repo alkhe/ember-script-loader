@@ -1,7 +1,7 @@
 {
   "name": "ember-script-loader",
   "version": "0.1.0",
-  "description": "Script loader for Ember applications.",
+  "description": "Dynamic script loader for Ember applications.",
   "keywords": [
     "ember-addon",
     "ember-script-loader",
