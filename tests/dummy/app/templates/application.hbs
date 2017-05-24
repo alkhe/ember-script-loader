@@ -1,5 +1,13 @@
-{{!-- The following component displays Ember's default welcome message. --}}
-{{welcome-page}}
-{{!-- Feel free to remove this! --}}
-
+{{#script-loader script='http://spin.js.org/spin.min.js'}}
+  {{spinjs-spinner width=1 lines=50 scale=1 speed=1}}
+{{/script-loader}}
+{{#script-loader script='http://spin.js.org/spin.min.js'}}
+  {{spinjs-spinner width=1 lines=40 scale=2 speed=2}}
+  {{spinjs-spinner width=1 lines=30 scale=4 speed=3}}
+  {{spinjs-spinner width=1 lines=20 scale=8 speed=4}}
+  {{spinjs-spinner width=1 lines=10 scale=16 speed=5}}
+{{/script-loader}}
+{{#script-loader script=(list 'https://unpkg.com/react@15/dist/react.min.js' 'https://unpkg.com/react-dom@15/dist/react-dom.min.js')}}
+  {{react-app}}
+{{/script-loader}}
 {{outlet}}
